@@ -1,5 +1,15 @@
 #!/bin/bash
 
+function setHaltingOracleVersion {
+    a=$((RANDOM%10))
+    b=$((RANDOM%10))
+    c=$((RANDOM%10))
+    echo $a
+    echo $b
+    echo $c
+    sed -i -E "s/   prin \"Halting Oracle\" \".*\"/   prin \"Halting Oracle\" \"$a.$b.$c\"/" /home/jsh/.config/neofetch/config.conf
+}
+
 function editAndRunNeofetch {
     file=$1
     sed -i -E "s/image_source=\"\/home\/jsh\/Documents\/Art\/Neofetches\/.*\"/image_source=\"\/home\/jsh\/Documents\/Art\/Neofetches\/$file\"/" /home/jsh/.config/neofetch/config.conf
@@ -8,6 +18,7 @@ function editAndRunNeofetch {
     waifu=${file%$suffix}
     echo $waifu
     sed -i -E "s/   prin \"Waifu\" \".*\"/   prin \"Waifu\" \"$waifu\"/" /home/jsh/.config/neofetch/config.conf
+    setHaltingOracleVersion
 }
 
 if [ "$1" == "--waifu" ]; then
@@ -19,4 +30,4 @@ else
         editAndRunNeofetch $file
     done
 fi
-neofetch --loop --crop_mode fit --size auto
+neofetch --loop --crop_mode fill --size auto
